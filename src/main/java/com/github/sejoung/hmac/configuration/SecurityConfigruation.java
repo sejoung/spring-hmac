@@ -1,6 +1,7 @@
 package com.github.sejoung.hmac.configuration;
 
 import com.github.sejoung.hmac.filter.HmacFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +14,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class SecurityConfigruation extends WebSecurityConfigurerAdapter {
+
+    @Value("${hmacKey}")
+    private String hmacKey;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -32,7 +37,7 @@ public class SecurityConfigruation extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
             .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
             .accessDeniedHandler(new AccessDeniedHandlerImpl()).and()
-            .addFilterBefore(new HmacFilter("123", this.authenticationManager()),
+            .addFilterBefore(new HmacFilter(hmacKey, this.authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class);
 
 

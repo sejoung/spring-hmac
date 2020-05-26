@@ -9,12 +9,12 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @ToString
-public class Test {
+public class HmacTest {
 
 	private String data;
 
 	@Builder
-	private Test(String data) {
+	private HmacTest(String data) {
 		this.data = data;
 	}
 
